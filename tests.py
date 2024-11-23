@@ -42,10 +42,14 @@ class TestBooksCollector:
         books_collector.set_book_genre('Дюна', 'Фантастика')
         assert books_collector.get_book_genre('Дюна') == 'Фантастика'
 
-    def test_get_book_genre(self, books_collector):
-        books_collector.add_new_book('Дюна')
-        books_collector.set_book_genre('Дюна', 'Фантастика')
-        assert books_collector.get_book_genre('Дюна') == 'Фантастика'
+    @pytest.mark.parametrize('name, genre', [
+        ['Загадка Эндхауза', 'Детективы'],
+        ['Оно', 'Ужасы']
+    ])
+    def test_get_book_genre(self, books_collector, name, genre):
+        books_collector.add_new_book(name)
+        books_collector.set_book_genre(name, genre)
+        assert books_collector.books_genre[name] == genre
 
     def test_get_books_with_specific_genre(self, books_collector):
         books_collector.add_new_book('Загадка Эндхауза')
@@ -94,3 +98,12 @@ class TestBooksCollector:
         books_collector.add_book_in_favorites('Ревизор')
         books_collector.delete_book_from_favorites('Ревизор')
         assert 'Ревизор' not in books_collector.get_list_of_favorites_books()
+
+    @pytest.mark.parametrize('name, genre', [
+        ['Сказка о Попе Поповиче и работнике его Балде', 'Мультфильмы'],
+        ['Песнь о вещем Олеге', 'Баллада']
+    ])
+    def test_set_book_genre_negative_case(self, books_collector, name, genre):
+
+        books_collector.add_new_book(name)
+        assert not books_collector.set_book_genre(name, genre)

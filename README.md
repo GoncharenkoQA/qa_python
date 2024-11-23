@@ -10,3 +10,4 @@ def get_books_for_children - вывести книги для детей;
 def add_book_in_favorites - добавить книгу в Избранное;
 def delete_book_from_favorites - удалить книгу из Избранного;
 def get_list_of_favorites_books - вывести список Избранных книг.
+def test_set_book_genre_negative_case - создаеть список из добавленных книг, но первая не добавляется из-за размера, а вторая добавляется, но имеет для задавания невалидный жанр.
